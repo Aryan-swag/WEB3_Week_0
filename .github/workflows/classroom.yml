@@ -1,0 +1,25 @@
+name: Autograding Tests
+
+on:
+  - push
+  - workflow_dispatch
+  - repository_dispatch
+
+jobs:
+  check-submission-file:
+    runs-on: ubuntu-latest
+
+    if: github.actor != 'github-classroom[bot]'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check submission.md exists
+        run: |
+          if [ -f "submission.md" ]; then
+            echo "✅ submission.md found"
+          else
+            echo "❌ submission.md missing"
+            exit 1
+          fi
